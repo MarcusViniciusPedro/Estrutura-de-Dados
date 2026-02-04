@@ -1,55 +1,55 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// Definição da estrutura do nó.
+// DefiniÃ§Ã£o da estrutura do nÃ³.
 typedef struct No {
     int valor;
     struct No *proximo;
 } No;
 
-// --- Funções da Fila ---
+// --- FunÃ§Ãµes da Fila ---
 
-// Adiciona um novo nó com um valor específico no final da fila.
-// Recebe um ponteiro para o ponteiro 'frente' para poder modificar o início da fila.
+// Adiciona um novo nÃ³ com um valor especÃ­fico no final da fila.
+// Recebe um ponteiro para o ponteiro 'frente' para poder modificar o inÃ­cio da fila.
 void enfileirar(No **frente, int valor) {
-    // 1. Aloca memória para o novo nó.
+    // 1. Aloca memÃ³ria para o novo nÃ³.
     No *novoNo = (No*)malloc(sizeof(No));
     novoNo->valor = valor;
-    novoNo->proximo = NULL; // O novo nó é o último da fila, então seu 'próximo' é NULL.
-    // 2. Se a fila estiver vazia, o novo nó se torna o primeiro.
+    novoNo->proximo = NULL; // O novo nÃ³ Ã© o Ãºltimo da fila, entÃ£o seu 'prÃ³ximo' Ã© NULL.
+    // 2. Se a fila estiver vazia, o novo nÃ³ se torna o primeiro.
     if (*frente == NULL) {
         *frente = novoNo;
     } else {
-        // 3. Percorre a fila até o último nó.
+        // 3. Percorre a fila atÃ© o Ãºltimo nÃ³.
         No *atual = *frente;
         while (atual->proximo != NULL) {
             atual = atual->proximo;
         }
-        // 4. Adiciona o novo nó no final.
+        // 4. Adiciona o novo nÃ³ no final.
         atual->proximo = novoNo;
     }
     printf("Valor %d enfileirado.\n", valor);
 }
 
-// Remove o nó do início e informa seu valor.
+// Remove o nÃ³ do inÃ­cio e informa seu valor.
 void desenfileirar(No **frente) {
-    // 1. Armazena o nó a ser removido (o nó da frente).
+    // 1. Armazena o nÃ³ a ser removido (o nÃ³ da frente).
     No *noRemover = *frente;
     int valorRemovido = noRemover->valor;
 
-    // 2. Move o ponteiro 'frente' para o próximo nó.
+    // 2. Move o ponteiro 'frente' para o prÃ³ximo nÃ³.
     *frente = noRemover->proximo;
 
-    // 3. Libera a memória do nó removido.
+    // 3. Libera a memÃ³ria do nÃ³ removido.
     free(noRemover);
 
     printf("Valor %d desenfileirado.\n", valorRemovido);
 }
 
-// --- Função Principal ---
+// --- FunÃ§Ã£o Principal ---
 
 int main() {
-    // A fila é representada por um único ponteiro para o início.
+    // A fila Ã© representada por um Ãºnico ponteiro para o inÃ­cio.
     No *fila = NULL;
     int n, valor;
 
@@ -69,7 +69,7 @@ int main() {
         desenfileirar(&fila);
     }
 
-    // A fila agora está vazia.
+    // A fila agora estÃ¡ vazia.
     printf("\nFim das operacoes. A fila agora esta vazia.\n");
     
     return 0;
