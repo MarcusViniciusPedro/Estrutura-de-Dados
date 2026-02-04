@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// Estrutura do NÛ (Elemento) da Pilha
+// Estrutura do N√≥ (Elemento) da Pilha
 typedef struct no_pilha {
     int dado;
     struct no_pilha *proximo;
@@ -17,23 +17,23 @@ void inicializar_pilha(Pilha *p) {
     p->topo = NULL;
 }
 
-// OperaÁ„o PUSH (Empilhar)
+// Opera√ß√£o PUSH (Empilhar)
 void push(Pilha *p, int valor) {
     NoPilha *novo_no = (NoPilha *)malloc(sizeof(NoPilha));
     if (novo_no == NULL) {
-        printf("Erro de alocaÁ„o de memÛria (PUSH).\n");
+        printf("Erro de aloca√ß√£o de mem√≥ria (PUSH).\n");
         exit(EXIT_FAILURE);
     }
     
     novo_no->dado = valor;
-    // O novo nÛ aponta para o antigo topo
+    // O novo n√≥ aponta para o antigo topo
     novo_no->proximo = p->topo;
-    // O novo nÛ se torna o novo topo
+    // O novo n√≥ se torna o novo topo
     p->topo = novo_no;
     printf("PUSH: %d (Empilhado)\n", valor);
 }
 
-// OperaÁ„o POP (Desempilhar)
+// Opera√ß√£o POP (Desempilhar)
 int pop(Pilha *p) {
     if (p->topo == NULL) {
         printf("Erro: Pilha vazia.\n");
@@ -43,14 +43,14 @@ int pop(Pilha *p) {
     NoPilha *no_removido = p->topo;
     int valor_removido = no_removido->dado;
     
-    // O topo avanÁa para o prÛximo nÛ
+    // O topo avan√ßa para o pr√≥ximo n√≥
     p->topo = p->topo->proximo;
     
     free(no_removido);
     return valor_removido;
 }
 
-// FunÁ„o principal para teste da Pilha
+// Fun√ß√£o principal para teste da Pilha
 int main() {
     Pilha minha_pilha;
     inicializar_pilha(&minha_pilha);
@@ -58,22 +58,22 @@ int main() {
     int dados[] = {20, 10, 5, 30, 99, 7};
     int n = sizeof(dados) / sizeof(dados[0]);
     
-    printf("--- SIMULA«√O DE PILHA (LIFO) ---\n");
+    printf("--- SIMULA√á√ÉO DE PILHA (LIFO) ---\n");
     printf("1. Inserindo dados do vetor: {20, 10, 5, 30, 99, 7}\n");
     
-    // InserÁ„o
+    // Inser√ß√£o
     for (int i = 0; i < n; i++) {
         push(&minha_pilha, dados[i]);
     }
     
     printf("\n2. Removendo (POP) os elementos (Ordem LIFO):\n");
     
-    // RemoÁ„o (POP) e exibiÁ„o
+    // Remo√ß√£o (POP) e exibi√ß√£o
     while (minha_pilha.topo != NULL) {
         printf("POP: %d (Desempilhado)\n", pop(&minha_pilha));
     }
     
-    printf("\n--- Fim da SimulaÁ„o da Pilha ---\n");
+    printf("\n--- Fim da Simula√ß√£o da Pilha ---\n");
     return 0;
 }
-// main_pilha(); // Chame esta funÁ„o no seu compilador C
+// main_pilha(); // Chame esta fun√ß√£o no seu compilador C
