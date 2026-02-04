@@ -1,67 +1,67 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// Definição da estrutura do nó.
-// Cada nó tem um valor inteiro e um ponteiro para o próximo nó.
+// DefiniÃ§Ã£o da estrutura do nÃ³.
+// Cada nÃ³ tem um valor inteiro e um ponteiro para o prÃ³ximo nÃ³.
 typedef struct No {
     int valor;
     struct No *proximo;
 } No;
 
-// --- Funções da Fila ---
+// --- FunÃ§Ãµes da Fila ---
 
-// Função para enfileirar (enqueue) um valor.
-// Adiciona um novo nó com o valor especificado no final da fila.
-// Recebe um ponteiro para o ponteiro 'frente' para poder modificar o início da fila.
+// FunÃ§Ã£o para enfileirar (enqueue) um valor.
+// Adiciona um novo nÃ³ com o valor especificado no final da fila.
+// Recebe um ponteiro para o ponteiro 'frente' para poder modificar o inÃ­cio da fila.
 void enfileirar(No **frente, int valor) {
-    // 1. Aloca memória para o novo nó e atribui o valor.
+    // 1. Aloca memÃ³ria para o novo nÃ³ e atribui o valor.
     No *novoNo = (No*)malloc(sizeof(No));
     if (novoNo == NULL) {
         printf("Erro de alocacao de memoria!\n");
         exit(1);
     }
     novoNo->valor = valor;
-    novoNo->proximo = NULL; // O novo nó sempre é o último, então seu 'proximo' é NULL.
+    novoNo->proximo = NULL; // O novo nÃ³ sempre Ã© o Ãºltimo, entÃ£o seu 'proximo' Ã© NULL.
 
-    // 2. Verifica se a fila está vazia.
+    // 2. Verifica se a fila estÃ¡ vazia.
     if (*frente == NULL) {
-        // Se a fila estiver vazia, o novo nó se torna o primeiro.
+        // Se a fila estiver vazia, o novo nÃ³ se torna o primeiro.
         *frente = novoNo;
     } else {
-        // 3. Se a fila não estiver vazia, encontra o último nó.
+        // 3. Se a fila nÃ£o estiver vazia, encontra o Ãºltimo nÃ³.
         No *atual = *frente;
         while (atual->proximo != NULL) {
             atual = atual->proximo;
         }
-        // 4. Adiciona o novo nó no final.
+        // 4. Adiciona o novo nÃ³ no final.
         atual->proximo = novoNo;
     }
     printf("Valor %d enfileirado.\n", valor);
 }
 
-// Função para desenfileirar um valor.
-// Remove e retorna o valor do primeiro nó da fila.
+// FunÃ§Ã£o para desenfileirar um valor.
+// Remove e retorna o valor do primeiro nÃ³ da fila.
 void desenfileirar(No **frente) {
-    // 1. Verifica se a fila está vazia.
+    // 1. Verifica se a fila estÃ¡ vazia.
     if (*frente == NULL) {
         printf("A fila esta vazia. Nao e possivel desenfileirar.\n");
         return;
     }
 
-    // 2. Armazena o nó a ser removido (o nó da frente).
+    // 2. Armazena o nÃ³ a ser removido (o nÃ³ da frente).
     No *noRemover = *frente;
     int valorRemovido = noRemover->valor;
 
-    // 3. Move a frente da fila para o próximo nó.
+    // 3. Move a frente da fila para o prÃ³ximo nÃ³.
     *frente = noRemover->proximo;
 
-    // 4. Libera a memória do nó removido.
+    // 4. Libera a memÃ³ria do nÃ³ removido.
     free(noRemover);
 
     printf("Valor %d desenfileirado.\n", valorRemovido);
 }
 
-// Função para exibir os elementos da fila.
+// FunÃ§Ã£o para exibir os elementos da fila.
 void exibirFila(No *frente) {
     if (frente == NULL) {
         printf("A fila esta vazia.\n");
@@ -69,7 +69,7 @@ void exibirFila(No *frente) {
     }
 
     printf("Elementos da fila: ");
-    // 1. Percorre a fila a partir do nó 'frente'.
+    // 1. Percorre a fila a partir do nÃ³ 'frente'.
     No *atual = frente;
     while (atual != NULL) {
         printf("%d ", atual->valor);
@@ -78,13 +78,13 @@ void exibirFila(No *frente) {
     printf("\n");
 }
 
-// Função principal (main) para testar o código.
+// FunÃ§Ã£o principal (main) para testar o cÃ³digo.
 int main() {
     // Inicializa o ponteiro 'frente' como NULL para indicar uma fila vazia.
     No *fila = NULL;
     int n, valor;
 
-    // Solicita ao usuário o número de valores a serem inseridos.
+    // Solicita ao usuÃ¡rio o nÃºmero de valores a serem inseridos.
     printf("Quantos valores voce deseja inserir na fila? ");
     scanf("%d", &n);
 
@@ -103,10 +103,10 @@ int main() {
     desenfileirar(&fila);
     desenfileirar(&fila);
     
-    // Exibe a fila após as remoções.
+    // Exibe a fila apÃ³s as remoÃ§Ãµes.
     exibirFila(fila);
 
-    // Libera a memória de todos os nós restantes.
+    // Libera a memÃ³ria de todos os nÃ³s restantes.
     while (fila != NULL) {
         desenfileirar(&fila);
     }
