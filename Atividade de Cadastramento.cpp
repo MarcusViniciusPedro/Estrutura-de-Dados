@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-// DefiniÁ„o da estrutura do Contato
+// Defini√ß√£o da estrutura do Contato
 typedef struct {
     char nome[50];
     char email[50];
@@ -10,10 +10,10 @@ typedef struct {
     char aniversario[11]; // Formato: DD/MM/AAAA
 } Contato;
 
-// Nome do arquivo onde os dados ser„o armazenados
+// Nome do arquivo onde os dados ser√£o armazenados
 #define ARQUIVO_DADOS "DATA.BIN"
 
-// ProtÛtipos das funÁıes
+// Prot√≥tipos das fun√ß√µes
 void exibir_menu();
 void cadastrar_contato();
 void alterar_contato();
@@ -28,13 +28,13 @@ int main() {
 
     do {
         exibir_menu();
-        printf("Escolha uma opÁ„o: ");
+        printf("Escolha uma op√ß√£o: ");
         if (scanf("%d", &opcao) != 1) {
             // Limpa o buffer de entrada em caso de erro de leitura
             while (getchar() != '\n');
-            opcao = 0; // ForÁa repetiÁ„o ou opÁ„o inv·lida
+            opcao = 0; // For√ßa repeti√ß√£o ou op√ß√£o inv√°lida
         }
-        while (getchar() != '\n'); // Limpa o buffer apÛs a leitura de int
+        while (getchar() != '\n'); // Limpa o buffer ap√≥s a leitura de int
 
         switch (opcao) {
             case 1:
@@ -53,17 +53,17 @@ int main() {
                 exibir_todos_contatos();
                 break;
             case 6:
-                printf("\nSaindo da aplicaÁ„o. AtÈ mais!\n");
+                printf("\nSaindo da aplica√ß√£o. At√© mais!\n");
                 break;
             default:
-                printf("\nOpÁ„o inv·lida. Tente novamente.\n");
+                printf("\nOp√ß√£o inv√°lida. Tente novamente.\n");
         }
     } while (opcao != 6);
 
     return 0;
 }
 
-// ImplementaÁ„o das funÁıes
+// Implementa√ß√£o das fun√ß√µes
 
 void exibir_menu() {
     printf("\n=============================\n");
@@ -72,19 +72,19 @@ void exibir_menu() {
     printf("1 - Cadastrar novo contato\n");
     printf("2 - Alterar dados de um contato\n");
     printf("3 - Excluir os dados de um contato\n");
-    printf("4 - Exibir os dados de um contato especÌfico\n");
+    printf("4 - Exibir os dados de um contato espec√≠fico\n");
     printf("5 - Exibir os dados de todos os contatos\n");
-    printf("6 - Sair da aplicaÁ„o\n");
+    printf("6 - Sair da aplica√ß√£o\n");
     printf("-----------------------------\n");
 }
 
-/* * FunÁ„o Auxiliar: Encontra um contato pelo nome e retorna sua posiÁ„o no arquivo.
- * Retorna -1 se n„o encontrar.
+/* * Fun√ß√£o Auxiliar: Encontra um contato pelo nome e retorna sua posi√ß√£o no arquivo.
+ * Retorna -1 se n√£o encontrar.
  */
 long buscar_posicao_contato(const char *nome_busca) {
     FILE *fp = fopen(ARQUIVO_DADOS, "rb");
     if (fp == NULL) {
-        return -1; // Arquivo n„o existe ou n„o pode ser aberto
+        return -1; // Arquivo n√£o existe ou n√£o pode ser aberto
     }
 
     Contato c;
@@ -127,7 +127,7 @@ void cadastrar_contato() {
     fgets(novo.telefone, sizeof(novo.telefone), stdin);
     novo.telefone[strcspn(novo.telefone, "\n")] = 0;
 
-    printf("Data de Anivers·rio (DD/MM/AAAA): ");
+    printf("Data de Anivers√°rio (DD/MM/AAAA): ");
     fgets(novo.aniversario, sizeof(novo.aniversario), stdin);
     novo.aniversario[strcspn(novo.aniversario, "\n")] = 0;
 
@@ -148,26 +148,26 @@ void alterar_contato() {
     long posicao = buscar_posicao_contato(nome_busca);
 
     if (posicao == -1) {
-        printf("Erro: Contato '%s' n„o encontrado.\n", nome_busca);
+        printf("Erro: Contato '%s' n√£o encontrado.\n", nome_busca);
         return;
     }
 
-    FILE *fp = fopen(ARQUIVO_DADOS, "r+b"); // "r+b" para leitura e escrita bin·ria
+    FILE *fp = fopen(ARQUIVO_DADOS, "r+b"); // "r+b" para leitura e escrita bin√°ria
     if (fp == NULL) {
         perror("Erro ao abrir o arquivo");
         return;
     }
 
-    // Move o ponteiro para a posiÁ„o do registro encontrado
+    // Move o ponteiro para a posi√ß√£o do registro encontrado
     fseek(fp, posicao * sizeof(Contato), SEEK_SET);
 
     Contato c_antigo;
-    fread(&c_antigo, sizeof(Contato), 1, fp); // LÍ o contato antigo
+    fread(&c_antigo, sizeof(Contato), 1, fp); // L√™ o contato antigo
 
     printf("\nDados Atuais de %s:\n", c_antigo.nome);
     printf("  Email: %s\n", c_antigo.email);
     printf("  Telefone: %s\n", c_antigo.telefone);
-    printf("  Anivers·rio: %s\n", c_antigo.aniversario);
+    printf("  Anivers√°rio: %s\n", c_antigo.aniversario);
 
     // ----------------------------------------------------
     // Lendo Novos Dados
@@ -192,14 +192,14 @@ void alterar_contato() {
         strcpy(c_novo.telefone, temp);
     }
 
-    printf("Nova Data de Anivers·rio (%s): ", c_antigo.aniversario);
+    printf("Nova Data de Anivers√°rio (%s): ", c_antigo.aniversario);
     fgets(temp, sizeof(temp), stdin);
     temp[strcspn(temp, "\n")] = 0;
     if (strlen(temp) > 0) {
         strcpy(c_novo.aniversario, temp);
     }
 
-    // Move o ponteiro de volta para o inÌcio do registro (necess·rio para o fwrite)
+    // Move o ponteiro de volta para o in√≠cio do registro (necess√°rio para o fwrite)
     fseek(fp, posicao * sizeof(Contato), SEEK_SET);
 
     // Sobrescreve o registro com os novos dados
@@ -216,22 +216,22 @@ void excluir_contato() {
     fgets(nome_busca, sizeof(nome_busca), stdin);
     nome_busca[strcspn(nome_busca, "\n")] = 0;
 
-    // Buscar a posiÁ„o do contato para confirmar se existe
+    // Buscar a posi√ß√£o do contato para confirmar se existe
     long posicao_excluir = buscar_posicao_contato(nome_busca);
 
     if (posicao_excluir == -1) {
-        printf("Erro: Contato '%s' n„o encontrado para exclus„o.\n", nome_busca);
+        printf("Erro: Contato '%s' n√£o encontrado para exclus√£o.\n", nome_busca);
         return;
     }
 
-    // Em arquivos, a exclus„o È feita criando um novo arquivo tempor·rio
-    // ou reescrevendo o original, copiando todos, exceto o excluÌdo.
+    // Em arquivos, a exclus√£o √© feita criando um novo arquivo tempor√°rio
+    // ou reescrevendo o original, copiando todos, exceto o exclu√≠do.
 
     FILE *fp_original = fopen(ARQUIVO_DADOS, "rb");
     FILE *fp_temp = fopen("temp.bin", "wb");
 
     if (fp_original == NULL || fp_temp == NULL) {
-        perror("Erro ao abrir arquivos para exclus„o");
+        perror("Erro ao abrir arquivos para exclus√£o");
         if (fp_original) fclose(fp_original);
         if (fp_temp) fclose(fp_temp);
         return;
@@ -243,7 +243,7 @@ void excluir_contato() {
 
     while (fread(&c, sizeof(Contato), 1, fp_original)) {
         if (i != posicao_excluir) {
-            // Copia para o arquivo tempor·rio
+            // Copia para o arquivo tempor√°rio
             fwrite(&c, sizeof(Contato), 1, fp_temp);
         } else {
             excluidos++;
@@ -254,12 +254,12 @@ void excluir_contato() {
     fclose(fp_original);
     fclose(fp_temp);
 
-    // Substitui o arquivo original pelo tempor·rio
+    // Substitui o arquivo original pelo tempor√°rio
     remove(ARQUIVO_DADOS);
     rename("temp.bin", ARQUIVO_DADOS);
 
     if (excluidos > 0) {
-        printf("\nContato '%s' excluÌdo com sucesso!\n", nome_busca);
+        printf("\nContato '%s' exclu√≠do com sucesso!\n", nome_busca);
     } else {
         printf("\nErro ao excluir o contato.\n");
     }
@@ -267,7 +267,7 @@ void excluir_contato() {
 
 void exibir_contato_especifico() {
     char nome_busca[50];
-    printf("\n--- EXIBIR CONTATO ESPECÕFICO ---\n");
+    printf("\n--- EXIBIR CONTATO ESPEC√çFICO ---\n");
     printf("Digite o NOME do contato que deseja exibir: ");
     fgets(nome_busca, sizeof(nome_busca), stdin);
     nome_busca[strcspn(nome_busca, "\n")] = 0;
@@ -287,7 +287,7 @@ void exibir_contato_especifico() {
             printf("Nome: %s\n", c.nome);
             printf("Email: %s\n", c.email);
             printf("Telefone: %s\n", c.telefone);
-            printf("Anivers·rio: %s\n", c.aniversario);
+            printf("Anivers√°rio: %s\n", c.aniversario);
             printf("------------------------\n");
             encontrado = 1;
             break; // Contato encontrado, para a busca
@@ -297,7 +297,7 @@ void exibir_contato_especifico() {
     fclose(fp);
 
     if (!encontrado) {
-        printf("\nContato '%s' n„o encontrado na agenda.\n", nome_busca);
+        printf("\nContato '%s' n√£o encontrado na agenda.\n", nome_busca);
     }
 }
 
@@ -320,7 +320,7 @@ void exibir_todos_contatos() {
         printf("  Nome: %s\n", c.nome);
         printf("  Email: %s\n", c.email);
         printf("  Telefone: %s\n", c.telefone);
-        printf("  Anivers·rio: %s\n", c.aniversario);
+        printf("  Anivers√°rio: %s\n", c.aniversario);
         printf("-----------------------------------------------------------------\n");
     }
 
